@@ -1,5 +1,9 @@
 # Data files 
 data/*
+pickle/*
 
 # Pycharm 
 .idea/*
+
+# Python
+src/__pycache__/
