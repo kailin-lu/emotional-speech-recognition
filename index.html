@@ -19,7 +19,7 @@
 				<div class="inner">
 					<span class="icon major fa-volume-up"></span>
 					<h1>Emotional Speech Recognition<br />
-						Can detect emotion from our tone?
+						Can emotion be detected from our tone?
 					<ul class="actions special">
 						<li><a href="#one" class="button scrolly">Explore</a></li>
 					</ul>
@@ -32,11 +32,15 @@
 					<div class="row gtr-150">
 						<div class="col-6 col-12-medium">
 							<header class="major">
-								<h2>But first, <strong>A Demo</strong></h2>
+								<h2>But first, <strong>let's see a demo</strong></h2>
 							</header>
 							<p>Record a short sentence trying to portray an emotion. You can say anything you want. The
 							classifier will look only at your tone and inflection, not the words you choose to say. </p>
-							<p>Does the model classify your emotion correctly?</p>
+							<p>Was your emotion correctly?</p>
+
+							<ul class="col-6 col-12-medium imp-medium">
+								<a href="#two" class="button scrolly">Learn about the data</a>
+							</ul>
 						</div>
 						    <div id="controls">
 								 <button id="recordButton">Record</button>
@@ -60,9 +64,26 @@
 							<header class="major">
 								<h2>Data</h2>
 							</header>
+							<p>This model was trained on the <a href="https://tspace.library.utoronto.ca/handle/1807/24487">
+								Toronto Emotional Speech Set</a></p>
+							<p>Two female actresses, ages 26 and 64, were asked to say the sentence "Say the word ____"
+							for a variety of words while trying to convey a particular emotion. There are 2800 total sentences
+							in the dataset.</p>
+							<p>There are 7 emotions: Happy, Sad, Angry, Disgust, Neutral, Pleasant Surprise, and Fear.</p>
+						</div>
+					</div>
+				</div>
+				<div class="container">
+					<div class="row gtr-150">
+						<div class="col-6 col-12-medium imp-medium">
+							<p>Distribution of </p>
+							<ul class="col-6 col-12-medium imp-medium">
+								<a href="#three" class="button scrolly">Dive into the model</a>
+							</ul>
+						</div>
+						<div class="col-6 col-12-medium">
 							<p>Something about data</p>
-							<p>Something about data</p>
-							<p>Something about data</p>
+
 						</div>
 					</div>
 				</div>
@@ -74,32 +95,13 @@
 					<header class="major">
 						<h2>Model</h2>
 					</header>
-					<p>Ante nunc accumsan et aclacus nascetur ac ante amet sapien sed.</p>
-					<div class="row gtr-150">
-						<div class="col-4 col-12-medium">
-							<span class="image fit"><img src="images/pic02.jpg" alt="" /></span>
-							<h3>Magna feugiat lorem</h3>
-							<p>Adipiscing a commodo ante nunc magna lorem et interdum mi ante nunc lobortis non amet vis sed volutpat et nascetur.</p>
-							<ul class="actions special">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</div>
-						<div class="col-4 col-12-medium">
-							<span class="image fit"><img src="images/pic03.jpg" alt="" /></span>
-							<h3>Magna feugiat lorem</h3>
-							<p>Adipiscing a commodo ante nunc magna lorem et interdum mi ante nunc lobortis non amet vis sed volutpat et nascetur.</p>
-							<ul class="actions special">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</div>
-						<div class="col-4 col-12-medium">
-							<span class="image fit"><img src="images/pic04.jpg" alt="" /></span>
-							<h3>Magna feugiat lorem</h3>
-							<p>Adipiscing a commodo ante nunc magna lorem et interdum mi ante nunc lobortis non amet vis sed volutpat et nascetur.</p>
-							<ul class="actions special">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</div>
+					<p>Sequence classification with bidirectional LSTM layers</p>
+
+					<p>The model used two bi-directional LSTM layers. For sequence
+					classification problems, bi-directional LSTM has shown an advantage over
+					standard LSTM layers as [3].</p>
+
+					<p>This model is based off the architecture presented in [1].</p>
 					</div>
 				</div>
 			</section>
@@ -110,17 +112,52 @@
 					<header class="major">
 						<h2>Results</h2>
 					</header>
-					<p>Sed lacus nascetur ac ante amet sapien.</p>
+					<p>Overall Accuracy: %</p>
+					<p>Overall F1: %</p>
+					<p>Overall Precision: %</p>
+					<p>Overall Recall: %</p>
+
+					<p>Confusion Matrix</p>
 				</div>
 			</section>
 
-		   <!-- Five -->
-			<section id="five" class="main style1 special">
+		<!-- Five -->
+		<section id="five" class="main style1">
 				<div class="container">
-					<header class="major">
-						<h2>References</h2>
-					</header>
-					<p>Sed lacus nascetur ac ante amet sapien.</p>
+					<div class="row gtr-150">
+						<div class="col-6 col-12-medium">
+							<header class="major">
+								<h2>Concluding Thoughts</h2>
+							</header>
+							<p>Not a bad start, but most people don't talk like this. Where the model had trouble.</p>
+
+							<h3>Future Work</h3>
+							<p>Sequence to sequence</p>
+					</div>
+				</div>
+			</section>
+
+
+		   <!-- Six -->
+			<section id="six" class="main style2">
+				<div class="container">
+				<div class="row gtr-150">
+					<div class="col-6 col-12-medium imp-medium">
+						<header class="major">
+							<h2>References</h2>
+						</header>
+						<p>[1] Chernykh, Vladimir, Grigoriy Sterling, and Pavel Prihodko. <br>
+						"Emotion recognition from speech with recurrent neural networks."
+						arXiv preprint arXiv:1701.08071 (2017).</p>
+						<p>[2] Dupuis, Kate M., Pichora-Fuller Kathleen.<br>
+							Toronto emotional speech set (TESS).<br>
+							https://tspace.library.utoronto.ca/handle/1807/24487 (2010).
+						</p>
+						<p>[3] Graves, Alex, Abdel-rahman Mohamed, and Geoffrey Hinton.<br>
+						"Speech recognition with deep recurrent neural networks."<br>
+						Acoustics, speech and signal processing IEEE, (2013).
+						</p>
+				</div>
 				</div>
 			</section>
 
@@ -128,8 +165,8 @@
 			<section id="footer">
 				<ul class="icons">
 					<li><a href="https://www.linkedin.com/in/kailin-lu" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
-					<li><a href="#" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
-					<li><a href="#" class="icon alt fa-envelope"><span class="label">Email</span></a></li>
+					<li><a href="https://www.github.com/kailin-lu" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+					<li><a href="mailto:kl2978@columbia.edu" class="icon alt fa-envelope"><span class="label">Email</span></a></li>
 				</ul>
 				<ul class="copyright">
 					<li>&copy; Kailin Lu</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>

@@ -2,14 +2,15 @@
 
 import pickle
 import datetime
+import random
 import numpy as np
 import tensorflow as tf
 from sklearn.model_selection import train_test_split
 from model import ClassifyEmotion
 
 BATCH_SIZE = 16
-EPOCHS = 1
-LR = 1e-4
+EPOCHS = 30
+LR = 5e-5
 VERBOSE = True
 TEST_SIZE = 0.2
 EXPORT_DIR = '/Users/kailinlu/Documents/emotional-speech/final_model'
@@ -47,7 +48,13 @@ def train(train_x, train_y, train_lengths,
                                              sess.graph)
         test_writer = tf.summary.FileWriter('/tmp/emo/test/' + run)
 
+
         for epoch in range(epochs):
+            # Shuffle batches
+            batches = list(zip(train_x, train_lengths, train_y))
+            random.shuffle(batches)
+            train_x, train_lengths, train_y = zip(*batches)
+
             batch_losses = []
             batch_accuracy = []
             for i, batch in enumerate(train_x):
@@ -59,33 +66,34 @@ def train(train_x, train_y, train_lengths,
                     seq_len: len_batch
                 }
                 _ = sess.run(step, feed_dict=feed_dict)
-            if verbose:
                 err, acc = sess.run([loss, accuracy], feed_dict=feed_dict)
                 batch_losses.append(err)
                 batch_accuracy.append(acc)
 
-                summary = sess.run(merged, feed_dict=feed_dict)
-                train_writer.add_summary(summary, epoch)
-                print('Epoch {} mean loss {} mean acc {}'.format(epoch,
-                                                     np.mean(batch_losses),
-                                                     np.mean(batch_accuracy)))
-            if epoch % 5 == 0:
-                val_errors = []
-                val_accuracy = []
-                for i, val_batch in enumerate(val_x):
-                    val_feed_dict = {
-                        x: val_batch,
-                        y: val_y[i],
-                        seq_len: val_lengths[i]
-                    }
-                summary, val_err, val_acc = sess.run([merged, loss, accuracy],
-                                            feed_dict=val_feed_dict)
-                val_errors.append(val_err)
-                val_accuracy.append(val_acc)
-                test_writer.add_summary(summary, epoch)
-                print('Epoch {} mean batch val loss {} val acc {}'.format(epoch,
-                                                                          np.mean(val_errors),
-                                                                          np.mean(val_accuracy)))
+            summary = sess.run(merged, feed_dict=feed_dict)
+            train_writer.add_summary(summary, epoch)
+
+            val_errors = []
+            val_accuracy = []
+            for i, val_batch in enumerate(val_x):
+                val_feed_dict = {
+                    x: val_batch,
+                    y: val_y[i],
+                    seq_len: val_lengths[i]
+                }
+            summary, val_err, val_acc = sess.run([merged, loss, accuracy],
+                                        feed_dict=val_feed_dict)
+            val_errors.append(val_err)
+            val_accuracy.append(val_acc)
+            test_writer.add_summary(summary, epoch)
+            print('Epoch {} '
+                  'mean loss {:4f} '
+                  'mean acc {:4f} '
+                  'val mean loss {:4f} '
+                  'val mean acc {:4f}'.format(epoch, np.mean(batch_losses),
+                                              np.mean(batch_accuracy),
+                                              np.mean(val_errors),
+                                              np.mean(val_accuracy)))
 
         tf.saved_model.simple_save(sess, export_dir=save_path,
                                    inputs={'x':x, 'seq_len': seq_len},

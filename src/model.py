@@ -4,7 +4,7 @@ import tensorflow as tf
 class ClassifyEmotion():
     """
     Classify utterances into emotions
-    2 Bi-directional LSTM layers followed by a dense softmax
+    3 Bi-directional LSTM layers followed by a dense softmax
     Model architecture based off of emotion recognition paper by Vladimir Chernykh
     https://github.com/vladimir-chernykh/emotion_recognition/tree/master/code/notebooks
     """
@@ -40,7 +40,7 @@ class ClassifyEmotion():
             dense_0 = tf.layers.dense(concat_lstm2, self.dense_hidden,
                                       activation=tf.nn.tanh)
             print(dense_0.shape)
-            logits = tf.layers.dense(dense_0, self.num_classes)
+            logits = tf.layers.dense(dense_0, self.num_classes, activation=tf.nn.softmax)
             print(logits.shape)
 
         with tf.name_scope('loss'):
@@ -58,7 +58,7 @@ class ClassifyEmotion():
             return tf.reduce_mean(tf.cast(correct, tf.float32))
 
 
-def blstm(index, num_hidden, input_x, seq_len, return_all=False):
+def blstm(index, num_hidden, input_x, seq_len, keep_prob=0.9, return_all=False):
     """
     Bidirectional LSTM layer
     Input shape [batch_size, seq_length, embedding_dimension]
@@ -68,12 +68,16 @@ def blstm(index, num_hidden, input_x, seq_len, return_all=False):
 
     with tf.variable_scope('blstm_{}'.format(index)):
         cell_fw = tf.nn.rnn_cell.LSTMCell(num_hidden, state_is_tuple=True)
+        fw_dropout = tf.contrib.rnn.DropoutWrapper(cell_fw,
+                                                   input_keep_prob=keep_prob)
         cell_bw = tf.nn.rnn_cell.LSTMCell(num_hidden, state_is_tuple=True)
-        outputs, states = tf.nn.bidirectional_dynamic_rnn(cell_fw, cell_bw,
+        bw_dropout = tf.contrib.rnn.DropoutWrapper(cell_bw,
+                                                   input_keep_prob=keep_prob)
+        outputs, states = tf.nn.bidirectional_dynamic_rnn(fw_dropout, bw_dropout,
                                                           inputs=input_x,
                                                           dtype=tf.float32,
                                                           sequence_length=seq_len)
-    concat = tf.concat(outputs, 2) # [batch_size, output_dim, timesteps]
+    concat = tf.concat(outputs, 2)  # [batch_size, output_dim, timesteps]
     if return_all:
         print('BLSTM-{}'.format(index), concat.shape)
         return(concat)
