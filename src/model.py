@@ -20,9 +20,9 @@ class ClassifyEmotion():
     def _build_model(self):
         with tf.name_scope('inputs'):
             x = tf.placeholder(shape=(None, None, self.num_features),
-                               dtype=tf.float32)
-            y = tf.placeholder(shape=(None, self.num_classes), dtype=tf.float32)
-            seq_len = tf.placeholder(shape=(None), dtype=tf.int32)
+                               dtype=tf.float32, name='x')
+            y = tf.placeholder(shape=(None, self.num_classes), dtype=tf.float32, name='y')
+            seq_len = tf.placeholder(shape=(None), dtype=tf.int32, name='seq_len')
 
         concat_lstm1 = blstm(index=0,
                              num_hidden=self.num_hidden,
@@ -40,7 +40,9 @@ class ClassifyEmotion():
             dense_0 = tf.layers.dense(concat_lstm2, self.dense_hidden,
                                       activation=tf.nn.tanh)
             print(dense_0.shape)
-            logits = tf.layers.dense(dense_0, self.num_classes, activation=tf.nn.softmax)
+            logits = tf.layers.dense(dense_0, self.num_classes,
+                                     activation=tf.nn.softmax,
+                                     name='logits')
             print(logits.shape)
 
         with tf.name_scope('loss'):

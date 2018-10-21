@@ -622,6 +622,8 @@
 		img {
 			border-radius: _size(border-radius);
 			display: block;
+			width: auto;
+			height: auto;
 		}
 
 		&.left {

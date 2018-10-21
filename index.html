@@ -58,7 +58,17 @@
 				<div class="container">
 					<div class="row gtr-150">
 						<div class="col-6 col-12-medium imp-medium">
-							<p>An image perhaps?</p>
+							<p>Sample Audio Segments</p>
+							<p> 64 Year Old, Disgust</p>
+								<audio controls>
+								<source src="assets/audio/OAF_back_disgust.wav" type="audio/wav">
+								</audio>
+
+							<p>26 Year Old, Happy</p>
+								<audio controls>
+								<source src="assets/audio/YAF_king_happy.wav" type="audio/wav">
+								</audio>
+
 						</div>
 						<div class="col-6 col-12-medium">
 							<header class="major">
@@ -70,21 +80,15 @@
 							for a variety of words while trying to convey a particular emotion. There are 2800 total sentences
 							in the dataset.</p>
 							<p>There are 7 emotions: Happy, Sad, Angry, Disgust, Neutral, Pleasant Surprise, and Fear.</p>
+							<p>There was an even distribution of samples across all 6 classes in the dataset.</p>
+							<ul class="col-6 col-12-medium imp-medium">
+								<a href="#three" class="button scrolly">Dive into the model</a>
+							</ul>
 						</div>
 					</div>
 				</div>
 				<div class="container">
 					<div class="row gtr-150">
-						<div class="col-6 col-12-medium imp-medium">
-							<p>Distribution of </p>
-							<ul class="col-6 col-12-medium imp-medium">
-								<a href="#three" class="button scrolly">Dive into the model</a>
-							</ul>
-						</div>
-						<div class="col-6 col-12-medium">
-							<p>Something about data</p>
-
-						</div>
 					</div>
 				</div>
 			</section>
@@ -110,14 +114,13 @@
 			<section id="four" class="main style2 special">
 				<div class="container">
 					<header class="major">
-						<h2>Results</h2>
+						<h2>Validation Results</h2>
 					</header>
-					<p>Overall Accuracy: %</p>
-					<p>Overall F1: %</p>
-					<p>Overall Precision: %</p>
-					<p>Overall Recall: %</p>
+					<p>Overall Accuracy: 93%</p>
+					<p>Overall F1: 93%</p>
 
 					<p>Confusion Matrix</p>
+					<img src="assets/images/confusion_matrix.png" height="175" width="500">
 				</div>
 			</section>
 
