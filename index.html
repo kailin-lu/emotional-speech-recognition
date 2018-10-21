@@ -43,12 +43,14 @@
 								<a href="#two" class="button scrolly">Learn about the data</a>
 							</ul>
 						</div>
+						<div class="col-6 col-12-medium">
 						    <div id="controls">
-								 <button id="recordButton">Record</button>
-								 <button id="stopButton" disabled>Stop</button>
+								 <button id="recordButton" onclick="onRecordClicked()">Record</button>
+								 <button id="stopButton" onclick="onStopClicked()" disabled>Stop</button>
+								<div class="col-6 col-12-medium">
+								 <canvas id="visualizer" width="200" height="100" ></canvas>
+								<div>
 							</div>
-						<div class="col-6 col-12-medium imp-medium">
-							<span class="image fit"><img src="images/pic01.jpg" alt="" /></span>
 						</div>
 					</div>
 				</div>
@@ -184,13 +186,9 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-
 			<!-- TensorflowJS -->
-			<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.13.0"> </script>
-			<script src="assets/js/tsmodel.js"></script>
-
+			<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"> </script>
 			<!-- RecordJS -->
-			<script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
 			<script src="assets/js/recordapp.js"></script>
 
 	</body>
