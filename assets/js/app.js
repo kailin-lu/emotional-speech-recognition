@@ -1,8 +1,10 @@
-// CODE REFERENCED FROM
-// https://developer.mozilla.org/en-US/docs/Web/API/MediaStream_Recording_API/Using_the_MediaStream_Recording_API
-// https://developers.google.com/web/fundamentals/media/recording-audio/
-// https://github.com/addpipe/Media-Recorder-API-Demo/blob/master/js/main.js
-// https://github.com/mdn/web-dictaphone
+/*
+ AUDIO RECORDING CODE REFERENCES
+ https://developer.mozilla.org/en-US/docs/Web/API/MediaStream_Recording_API/Using_the_MediaStream_Recording_API
+ https://developers.google.com/web/fundamentals/media/recording-audio/
+ https://github.com/addpipe/Media-Recorder-API-Demo/blob/master/js/main.js
+ https://github.com/mdn/web-dictaphone
+*/
 
 navigator.getUserMeia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
@@ -53,6 +55,7 @@ function startRecording(stream) {
         audio.setAttribute('controls', '');
         var audioURL = window.URL.createObjectURL(blob);
         audio.src = audioURL;
+        audio.play()
         stream.getTracks()
         .forEach( track => track.stop() );
 
@@ -120,3 +123,4 @@ function visualize(stream) {
         };
     }
 }
+
