@@ -53,6 +53,8 @@ function startRecording(stream) {
         audio.setAttribute('controls', '');
         var audioURL = window.URL.createObjectURL(blob);
         audio.src = audioURL;
+        stream.getTracks()
+        .forEach( track => track.stop() );
 
 	};
 }
@@ -63,6 +65,7 @@ function onRecordClicked (){
     record.disabled = true;
     stop.disabled = false;
 }
+
 
 function onStopClicked(){
 	mediaRecorder.stop();
@@ -117,7 +120,3 @@ function visualize(stream) {
         };
     }
 }
-
-
-
-
