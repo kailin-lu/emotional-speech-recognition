@@ -124,3 +124,15 @@ function visualize(stream) {
     }
 }
 
+
+/*
+Tensorflow model
+*/
+
+const WEIGHTS_URL = 'https://storage.cloud.google.com/klu-models/web_prediction_model/weights_manifest.json';
+const MODEL_URL = 'https://storage.cloud.google.com/klu-models/web_prediction_model/tensorflowjs_model.pb';
+
+const model = tf.loadFrozenModel(MODEL_URL, WEIGHTS_URL);
+
+
+
