@@ -7,3 +7,6 @@ pickle/*
 
 # Python
 src/__pycache__/
+
+# Converting model to tensorflowjs
+src/test.py

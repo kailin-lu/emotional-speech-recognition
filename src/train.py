@@ -6,14 +6,14 @@ import random
 import numpy as np
 import tensorflow as tf
 from sklearn.model_selection import train_test_split
-from model import ClassifyEmotion
+from lstm_model import LSTMEmotion
 
 BATCH_SIZE = 16
-EPOCHS = 30
+EPOCHS = 5
 LR = 5e-5
 VERBOSE = True
 TEST_SIZE = 0.2
-EXPORT_DIR = '/Users/kailinlu/Documents/emotional-speech/final_model'
+EXPORT_DIR = '/Users/kailinlu/Documents/emotional-speech/final_lstm_model'
 
 def train(train_x, train_y, train_lengths,
           val_x, val_y, val_lengths,
@@ -24,7 +24,7 @@ def train(train_x, train_y, train_lengths,
     tf.reset_default_graph()
     tf.set_random_seed(0)
 
-    model = ClassifyEmotion(lr=lr)
+    model = LSTMEmotion(lr=lr)
 
     x, y, seq_len, logits, loss = model._build_model()
     step = model._step(loss)
@@ -97,7 +97,7 @@ def train(train_x, train_y, train_lengths,
 
         tf.saved_model.simple_save(sess, export_dir=save_path,
                                    inputs={'x':x, 'seq_len': seq_len},
-                                   outputs={'y':y})
+                                   outputs={'logits': logits})
 
 
 
@@ -119,7 +119,7 @@ if __name__ == '__main__':
     y = labels[0]
 
     train_x, val_x, train_lengths, val_lengths, train_y, val_y = train_test_split(
-        x, lengths, y, test_size=TEST_SIZE)
+        x, lengths, y, test_size=TEST_SIZE, random_state=0)
 
     # Batch data
     batched_x = batch(train_x)
