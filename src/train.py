@@ -6,25 +6,23 @@ import random
 import numpy as np
 import tensorflow as tf
 from sklearn.model_selection import train_test_split
-from lstm_model import LSTMEmotion
+from model import ClassifyEmotion
 
 BATCH_SIZE = 16
 EPOCHS = 5
 LR = 5e-5
-VERBOSE = True
 TEST_SIZE = 0.2
-EXPORT_DIR = '/Users/kailinlu/Documents/emotional-speech/final_lstm_model'
+EXPORT_DIR = '/Users/kailinlu/Documents/emotional-speech/final_model'
 
 def train(train_x, train_y, train_lengths,
           val_x, val_y, val_lengths,
           epochs=EPOCHS,
-          verbose=VERBOSE,
           lr=LR,
           save_path=EXPORT_DIR):
     tf.reset_default_graph()
     tf.set_random_seed(0)
 
-    model = LSTMEmotion(lr=lr)
+    model = ClassifyEmotion(lr=lr)
 
     x, y, seq_len, logits, loss = model._build_model()
     step = model._step(loss)
@@ -94,6 +92,8 @@ def train(train_x, train_y, train_lengths,
                                               np.mean(batch_accuracy),
                                               np.mean(val_errors),
                                               np.mean(val_accuracy)))
+
+        tf.graph_util.remove_training_nodes(tf.get_default_graph())
 
         tf.saved_model.simple_save(sess, export_dir=save_path,
                                    inputs={'x':x, 'seq_len': seq_len},

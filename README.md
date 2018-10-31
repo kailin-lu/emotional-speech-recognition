@@ -27,5 +27,4 @@ totaling 39 features per 25ms segment of audio.
 ### Results 
 
 Accuracy (one vs. all): 93% 
-
 F1 Score: 93% 

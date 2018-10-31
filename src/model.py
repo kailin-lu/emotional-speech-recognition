@@ -10,24 +10,26 @@ class ClassifyEmotion():
     """
 
     def __init__(self, num_features=39, num_classes=7, num_hidden=128,
-                 batch_size=16, max_length=298, dense_hidden=64, lr=1e-4):
+                 max_length=298, dense_hidden=64, lr=1e-4):
         self.num_features = num_features
         self.num_classes = num_classes
         self.num_hidden = num_hidden
+        self.max_length = max_length
         self.dense_hidden = dense_hidden
         self.learning_rate = lr
 
     def _build_model(self):
         with tf.name_scope('inputs'):
-            x = tf.placeholder(shape=(None, None, self.num_features),
+            x = tf.placeholder(shape=(None, self.max_length, self.num_features),
                                dtype=tf.float32, name='x')
+            print('x', x.shape)
             y = tf.placeholder(shape=(None, self.num_classes), dtype=tf.float32, name='y')
             seq_len = tf.placeholder(shape=(None), dtype=tf.int32, name='seq_len')
 
         concat_lstm1 = blstm(index=0,
                              num_hidden=self.num_hidden,
-                             input_x=x,
                              seq_len=seq_len,
+                             input_x=x,
                              return_all=True)
 
         concat_lstm2 = blstm(index=1,
@@ -49,7 +51,7 @@ class ClassifyEmotion():
             loss = tf.reduce_mean(
                 tf.nn.softmax_cross_entropy_with_logits_v2(labels=y,
                                                            logits=logits))
-        return x, y, seq_len, logits, loss
+        return x, y, logits, loss
 
     def _step(self, loss):
         return tf.train.AdamOptimizer(self.learning_rate).minimize(loss)
@@ -60,7 +62,7 @@ class ClassifyEmotion():
             return tf.reduce_mean(tf.cast(correct, tf.float32))
 
 
-def blstm(index, num_hidden, input_x, seq_len, keep_prob=0.9, return_all=False):
+def blstm(index, num_hidden, input_x, seq_len=None, keep_prob=0.9, return_all=False):
     """
     Bidirectional LSTM layer
     Input shape [batch_size, seq_length, embedding_dimension]
@@ -93,6 +95,8 @@ def blstm(index, num_hidden, input_x, seq_len, keep_prob=0.9, return_all=False):
         return(concat_last)
 
 
-# if __name__=='__main__':
-#     model = ClassifyEmotion()
-#     model._build_model()
+
+if __name__=='__main__':
+    model = ClassifyEmotion()
+    model._build_model()
+
