@@ -24,7 +24,11 @@ Each audio file was preprocessed using [python_speech_features](https://github.c
 into mel-frequency cepstral coefficients (MFCC), delta (first difference) and delta-delta (first difference of differences) features, 
 totaling 39 features per 25ms segment of audio. 
 
-### Results 
+### Test Results
+Accuracy (one vs. all): 84% 
+F1 Score: 87% 
+
+### Training Results 
 
 Accuracy (one vs. all): 93% 
 F1 Score: 93% 
