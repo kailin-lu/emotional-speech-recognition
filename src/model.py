@@ -4,7 +4,7 @@ import tensorflow as tf
 class ClassifyEmotion():
     """
     Classify utterances into emotions
-    3 Bi-directional LSTM layers followed by a dense softmax
+    2 Bi-directional LSTM layers followed by a dense layer and softmax
     Model architecture based off of emotion recognition paper by Vladimir Chernykh
     https://github.com/vladimir-chernykh/emotion_recognition/tree/master/code/notebooks
     """
